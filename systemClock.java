@@ -10,4 +10,11 @@ public class systemClock
             System.out.println(elapsedSec); 
     }
 }
+class SystemClock
+{
+	public void clock()
+	{
+		
+	}
+}
 //comment
