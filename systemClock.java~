@@ -22,6 +22,5 @@ class DemoMethods
 	public double getElapsedTime()
 	{
 		long elapsedTime = System.currentTimeMillis() - startTime;
-        return elapsedTime;
 	}
 }
