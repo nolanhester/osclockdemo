@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*; 
+import java.text.SimpleDateFormat;
 public class systemClock
 {
     public static void main(String[] args)
@@ -10,6 +11,7 @@ public class systemClock
             demo.startClock();
             Thread.sleep(1000);
             System.out.println(demo.getElapsedTime()/1000); 
+            System.out.println(demo.timeOfDay());
             System.exit(0);
     }
 }
@@ -31,6 +33,12 @@ class DemoMethods
 		return elapsedTime;
 	}
 	
+	public String timeOfDay()
+	{
+		SimpleDateFormat readableDate = new SimpleDateFormat("h:mm a");
+		String time = readableDate.format(getElapsedTime());
+		return time;
+	}
 	public void Interupt()
 	{
 		double time = getElapsedTime();
