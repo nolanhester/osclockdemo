@@ -10,6 +10,7 @@ public class systemClock
             demo.startClock();
             Thread.sleep(1000);
             System.out.println(demo.getElapsedTime()/1000); 
+            System.exit(0);
     }
 }
 class DemoMethods
@@ -23,16 +24,11 @@ class DemoMethods
 		
 	}
 	
+	
 	public double getElapsedTime()
 	{
-		double elapsedTime = System.currentTimeMillis() - bootTime;
-        return elapsedTime;
-	}
-	
-	public double getElapsedTimeTimer()
-	{
-		double elapsedTime2 = milliCounter - bootTime;
-		return elapsedTime2;
+		double elapsedTime = milliCounter + bootTime;
+		return elapsedTime;
 	}
 	
 	public void Interupt()
