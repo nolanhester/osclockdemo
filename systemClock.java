@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.event.*; 
 public class systemClock
 {
     public static void main(String[] args)
@@ -12,16 +14,35 @@ public class systemClock
 }
 class DemoMethods
 {
-    long startTime = 0;
+    private long bootTime = System.currentTimeMillis();
+    private long milliCounter = 0;
 	public void startClock()
 	{
-		startTime = System.currentTimeMillis(); //start time
+		Timer timeFromBoot = new Timer(1,new MyActionListener()); //start time
+		timeFromBoot.start();
 		
 	}
 	
 	public double getElapsedTime()
 	{
-		long elapsedTime = System.currentTimeMillis() - startTime;
+		double elapsedTime = System.currentTimeMillis() - bootTime;
         return elapsedTime;
+	}
+	
+	public double getElapsedTimeTimer()
+	{
+		double elapsedTime2 = milliCounter - bootTime;
+		return elapsedTime2;
+	}
+	
+	public void Interupt()
+	{
+		double time = getElapsedTime();
+	}
+	
+	class MyActionListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			milliCounter ++;	
+		}
 	}
 }
