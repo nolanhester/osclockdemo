@@ -4,21 +4,31 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 public class systemClock
 {
-    public static void main(String[] args)
-        throws InterruptedException 
+    public static void main(String[] args) 
         {
             
+            boolean runAgain = true;
             DemoMethods demo = new DemoMethods();
             Scanner keyboard = new Scanner(System.in);
             demo.startClock();
-            //Thread.sleep(10000);
-            System.out.println(System.currentTimeMillis());
-            System.out.println(demo.getElapsedTime());
-            System.out.println(demo.getElapsedTime()/1000); 
-            System.out.println(demo.timeOfDay());
-            System.out.print("Enter quantum number for sample process: ");
-            int quantumNum = keyboard.nextInt();
-            demo.processTimer(quantumNum);
+            int select;
+            do{
+            	System.out.print("Select a function:\n1. Show time of day.\n2. Demo process timing\n3. Demo CPU accounting\n4. Demo alarm system call\n5. Demo watchdog timer\n6. Demo profiling\n7. Exit\n");
+            	select = keyboard.nextInt();
+            	switch(select)
+            	{
+            		case 1: System.out.println(demo.timeOfDay());
+            				break;
+            		case 2: System.out.print("Enter a quantum number: ");
+            				int num = keyboard.nextInt();
+            				demo.processTimer(num);
+            				break;
+            		case 7: runAgain = false;
+            				break;
+            		default: System.out.println("Invalid option");
+            	}
+            	
+            }while(runAgain == true);
             System.exit(0);
     }
 }
@@ -65,9 +75,12 @@ class DemoMethods
 				quantumNum = -1;
 		}
 		System.out.println("Process time limit reached");
-		
 	}
 	
+	public void cpuTimer()
+	{
+		
+	}
 	
 	
 	class MyActionListener implements ActionListener{
