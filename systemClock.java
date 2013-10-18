@@ -23,6 +23,8 @@ public class systemClock
             				int num = keyboard.nextInt();
             				demo.processTimer(num);
             				break;
+            		case 3: demo.cpuTimer();
+            				break;
             		case 7: runAgain = false;
             				break;
             		default: System.out.println("Invalid option");
@@ -37,6 +39,7 @@ class DemoMethods
 	//Grabs time since the epoch and sets up a counter to use with the clock
     private long bootTime = System.currentTimeMillis();
     private long milliCounter = 0;
+    Scanner scn = new Scanner(System.in);
 	
 	//Sets up a timer to keep track of ms since initial time grab
 	public void startClock()
@@ -79,7 +82,13 @@ class DemoMethods
 	
 	public void cpuTimer()
 	{
-		
+		Timer cpuTimer = new Timer(1,new MyActionListener());
+		cpuTimer.start();
+		System.out.println("New process started.");
+		System.out.println("Press enter to stop process and show total running time.");
+		scn.nextLine();
+		cpuTimer.stop();
+		System.out.println("The process ran for " + milliCounter + " ticks"); 
 	}
 	
 	
