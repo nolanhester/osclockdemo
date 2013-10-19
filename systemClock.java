@@ -12,6 +12,7 @@ public class systemClock
             DemoMethods demo = new DemoMethods();
             Scanner keyboard = new Scanner(System.in);
             demo.startClock();
+            String input;
             int select;
             do{
             	System.out.print("Select a function:\n1. Show time of day.\n2. Demo process timing\n3. Demo CPU accounting\n4. Demo alarm system call\n5. Demo watchdog timer\n6. Demo profiling\n7. Exit\n");
@@ -27,8 +28,12 @@ public class systemClock
             		case 3: demo.cpuTimer();
             				break;
             		case 4: System.out.println("Enter time intervals to generate signals: ");
-            				String input = keyboard.next();
+            				input = keyboard.next();
             				demo.alarmCall(input);
+            				break;
+            		case 5: System.out.println("Enter time intervals to call procedures: ");
+            				input = keyboard.next();
+            				demo.watchDogTimer(input);
             				break;
             		case 7: runAgain = false;
             				break;
@@ -106,7 +111,6 @@ class DemoMethods
 		{
 			String temp = str.nextToken();
 			signalTimes[j] = Double.parseDouble(temp);
-			System.out.println(j);
 			j++;
 		}
 		double currentTime = getElapsedTime();
@@ -118,6 +122,35 @@ class DemoMethods
 				System.out.print("");
 				if ((currentTime + signalTimes[i] == getElapsedTime()) || (currentTime + signalTimes[i] <= getElapsedTime()) ){
 					System.out.println("Signal sent at: " + (currentTime + signalTimes[i]));
+					currentTime += signalTimes[i];
+					signalNotSent = false;
+					}
+			}
+		}
+		
+	}
+	
+	public void watchDogTimer(String input)
+	{
+		System.out.println("The clock driver will call procedures at the following intervals: " + input);
+		StringTokenizer str = new StringTokenizer(input,",");
+		double signalTimes[] = new double[str.countTokens()];
+		int j = 0;
+		while(str.hasMoreTokens())
+		{
+			String temp = str.nextToken();
+			signalTimes[j] = Double.parseDouble(temp);
+			j++;
+		}
+		double currentTime = getElapsedTime();
+		for(int i=0; i<signalTimes.length; i++)
+		{
+			boolean signalNotSent = true;
+			while(signalNotSent == true)
+			{
+				System.out.print("");
+				if ((currentTime + signalTimes[i] == getElapsedTime()) || (currentTime + signalTimes[i] <= getElapsedTime()) ){
+					System.out.println("Procedure called at: " + (currentTime + signalTimes[i]));
 					currentTime += signalTimes[i];
 					signalNotSent = false;
 					}
