@@ -35,6 +35,8 @@ public class systemClock
             				input = keyboard.next();
             				demo.watchDogTimer(input);
             				break;
+            		case 6: demo.profiler();
+            				break;
             		case 7: runAgain = false;
             				break;
             		default: System.out.println("Invalid option");
@@ -49,6 +51,8 @@ class DemoMethods
 	//Grabs time since the epoch and sets up a counter to use with the clock
     private long bootTime = System.currentTimeMillis();
     private long milliCounter = 0;
+    private long milliCounter2 = 0;
+    private long milliCounter3 = 0;
     Scanner scn = new Scanner(System.in);
 	
 	//Sets up a timer to keep track of ms since initial time grab
@@ -90,17 +94,19 @@ class DemoMethods
 		System.out.println("Process time limit reached");
 	}
 	
+	//Shows how long a process ran for
 	public void cpuTimer()
 	{
-		Timer cpuTimer = new Timer(1,new MyActionListener());
+		Timer cpuTimer = new Timer(1,new MyActionListener2());
 		cpuTimer.start();
 		System.out.println("New process started.");
 		System.out.println("Press enter to stop process and show total running time.");
 		scn.nextLine();
 		cpuTimer.stop();
-		System.out.println("The process ran for " + milliCounter + " ticks"); 
+		System.out.println("The process ran for " + milliCounter2 + " ticks"); 
 	}
 	
+	//Implements system alarm calls to user processes
 	public void alarmCall(String input)
 	{
 		System.out.println("The clock driver will send signals at the following intervals: " + input);
@@ -130,6 +136,7 @@ class DemoMethods
 		
 	}
 	
+	//Implements watchdog timers
 	public void watchDogTimer(String input)
 	{
 		System.out.println("The clock driver will call procedures at the following intervals: " + input);
@@ -158,9 +165,43 @@ class DemoMethods
 		}
 		
 	}
+	
+	//Demos profiling with two different processes
+	public void profiler()
+	{
+		Timer profileTimer = new Timer(1, new MyActionListener3());
+		profileTimer.start();
+		double process1 = 0;
+		double process2 = 0;
+		System.out.println("Process 1 and 2 started");
+		while(milliCounter3 <= 5000)
+		{
+			System.out.print("");
+			process1 = milliCounter3;
+			process2 = milliCounter3;
+		}
+		System.out.println("Process 1 stopped");
+		while(milliCounter3 <= 10000)
+		{
+			System.out.print("");
+			process2 = milliCounter3;
+		}
+		System.out.println("Process 2 stopped");
+		System.out.println("Process 1 ran for " + process1 + " ticks. Process 2 ran for " + process2 + " ticks.");
+	}
 	class MyActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			milliCounter ++;	
+		}
+	}
+	class MyActionListener2 implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			milliCounter2 ++;	
+		}
+	}
+	class MyActionListener3 implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			milliCounter3 ++;	
 		}
 	}
 }
