@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*; 
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 public class systemClock
 {
     public static void main(String[] args) 
@@ -24,6 +25,10 @@ public class systemClock
             				demo.processTimer(num);
             				break;
             		case 3: demo.cpuTimer();
+            				break;
+            		case 4: System.out.println("Enter time intervals to generate signals: ");
+            				String input = keyboard.next();
+            				demo.alarmCall(input);
             				break;
             		case 7: runAgain = false;
             				break;
@@ -91,7 +96,35 @@ class DemoMethods
 		System.out.println("The process ran for " + milliCounter + " ticks"); 
 	}
 	
-	
+	public void alarmCall(String input)
+	{
+		System.out.println("The clock driver will send signals at the following intervals: " + input);
+		StringTokenizer str = new StringTokenizer(input,",");
+		double signalTimes[] = new double[str.countTokens()];
+		int j = 0;
+		while(str.hasMoreTokens())
+		{
+			String temp = str.nextToken();
+			signalTimes[j] = Double.parseDouble(temp);
+			System.out.println(j);
+			j++;
+		}
+		double currentTime = getElapsedTime();
+		for(int i=0; i<signalTimes.length; i++)
+		{
+			boolean signalNotSent = true;
+			while(signalNotSent == true)
+			{
+				System.out.print("");
+				if ((currentTime + signalTimes[i] == getElapsedTime()) || (currentTime + signalTimes[i] <= getElapsedTime()) ){
+					System.out.println("Signal sent at: " + (currentTime + signalTimes[i]));
+					currentTime += signalTimes[i];
+					signalNotSent = false;
+					}
+			}
+		}
+		
+	}
 	class MyActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			milliCounter ++;	
