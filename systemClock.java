@@ -27,11 +27,11 @@ public class systemClock
             				break;
             		case 3: demo.cpuTimer();
             				break;
-            		case 4: System.out.println("Enter time intervals to generate signals: ");
+            		case 4: System.out.println("Enter time intervals to generate signals (use commas with no spaces to separate values): ");
             				input = keyboard.next();
             				demo.alarmCall(input);
             				break;
-            		case 5: System.out.println("Enter time intervals to call procedures: ");
+            		case 5: System.out.println("Enter time intervals to call procedures (use commas with no spaces to separate values): ");
             				input = keyboard.next();
             				demo.watchDogTimer(input);
             				break;
